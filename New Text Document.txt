@@ -1,0 +1,186 @@
+import java.util.*;
+
+// ======================== Data Structures ========================
+
+class Track {
+    String from, to;
+    int distance;   // km
+    int travelTime; // minutes
+    public Track(String from, String to, int distance, int travelTime) {
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+        this.travelTime = travelTime;
+    }
+}
+
+class Train {
+    String id;
+    String start, end;
+    int startTime;
+    int priority;
+    List<String> mustStops;
+    List<String> finalRoute = new ArrayList<>();
+    int arrivalTime;
+
+    public Train(String id, String start, String end, int startTime, int priority, List<String> mustStops) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.startTime = startTime;
+        this.priority = priority;
+        this.mustStops = mustStops;
+    }
+}
+
+class Reservation {
+    String trainId;
+    int startTime, endTime;
+    public Reservation(String trainId, int startTime, int endTime) {
+        this.trainId = trainId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+}
+
+// ======================== Scheduler ========================
+
+public class TrainScheduler {
+    Map<String, List<Track>> graph = new HashMap<>();
+    Map<String, List<Reservation>> reservations = new HashMap<>();
+
+    // Add track
+    public void addTrack(String from, String to, int distance, int travelTime) {
+        graph.putIfAbsent(from, new ArrayList<>());
+        graph.putIfAbsent(to, new ArrayList<>());
+        graph.get(from).add(new Track(from, to, distance, travelTime));
+        graph.get(to).add(new Track(to, from, distance, travelTime)); // undirected
+    }
+
+    // ======================== Dijkstra with Reservations ========================
+    public List<String> dijkstra(String start, String end, int startTime) {
+        Map<String, Integer> dist = new HashMap<>();
+        Map<String, String> prev = new HashMap<>();
+        PriorityQueue<String> pq = new PriorityQueue<>(Comparator.comparingInt(dist::get));
+
+        for (String node : graph.keySet()) {
+            dist.put(node, Integer.MAX_VALUE);
+            prev.put(node, null);
+        }
+        dist.put(start, startTime);
+        pq.add(start);
+
+        while (!pq.isEmpty()) {
+            String u = pq.poll();
+            if (u.equals(end)) break;
+
+            for (Track edge : graph.getOrDefault(u, new ArrayList<>())) {
+                int departure = dist.get(u);
+
+                // Check if track is free at departure time
+                int availableTime = checkAvailability(edge, departure);
+
+                int arrival = availableTime + edge.travelTime;
+                if (arrival < dist.get(edge.to)) {
+                    dist.put(edge.to, arrival);
+                    prev.put(edge.to, u);
+                    pq.add(edge.to);
+                }
+            }
+        }
+
+        // Reconstruct path
+        List<String> path = new ArrayList<>();
+        String node = end;
+        while (node != null) {
+            path.add(node);
+            node = prev.get(node);
+        }
+        Collections.reverse(path);
+        return path;
+    }
+
+    // ======================== Check Reservation ========================
+    private int checkAvailability(Track edge, int desiredTime) {
+        String key = edge.from + "-" + edge.to;
+        List<Reservation> resList = reservations.getOrDefault(key, new ArrayList<>());
+
+        int time = desiredTime;
+        for (Reservation r : resList) {
+            if (time < r.endTime && time >= r.startTime) {
+                time = r.endTime; // wait until track is free
+            }
+        }
+        return time;
+    }
+
+    private void reserve(Track edge, String trainId, int startTime) {
+        String key = edge.from + "-" + edge.to;
+        reservations.putIfAbsent(key, new ArrayList<>());
+        reservations.get(key).add(new Reservation(trainId, startTime, startTime + edge.travelTime));
+    }
+
+    // ======================== Schedule Trains ========================
+    public void schedule(List<Train> trains) {
+        // Sort trains by priority then startTime
+        trains.sort((a, b) -> {
+            if (a.priority != b.priority) return b.priority - a.priority;
+            return a.startTime - b.startTime;
+        });
+
+        for (Train train : trains) {
+            String current = train.start;
+            int currentTime = train.startTime;
+            List<String> route = new ArrayList<>();
+            route.add(current);
+
+            List<String> stops = new ArrayList<>(train.mustStops);
+            stops.add(train.end);
+
+            for (String stop : stops) {
+                List<String> path = dijkstra(current, stop, currentTime);
+
+                for (int i = 0; i < path.size() - 1; i++) {
+                    String u = path.get(i);
+                    String v = path.get(i + 1);
+
+                    // Find edge
+                    Track edge = graph.get(u).stream()
+                            .filter(e -> e.to.equals(v))
+                            .findFirst().orElse(null);
+
+                    if (edge != null) {
+                        int startT = checkAvailability(edge, currentTime);
+                        reserve(edge, train.id, startT);
+                        currentTime = startT + edge.travelTime;
+                    }
+                }
+                route.addAll(path.subList(1, path.size()));
+                current = stop;
+            }
+
+            train.finalRoute = route;
+            train.arrivalTime = currentTime;
+
+            System.out.println("Train " + train.id + " Route: " + route + " Arrival: " + train.arrivalTime);
+        }
+    }
+
+    // ======================== Main Example ========================
+    public static void main(String[] args) {
+        TrainScheduler scheduler = new TrainScheduler();
+
+        // Build Graph
+        scheduler.addTrack("A", "B", 5, 5);
+        scheduler.addTrack("B", "C", 7, 7);
+        scheduler.addTrack("A", "C", 12, 12);
+
+        // Trains
+        List<Train> trains = new ArrayList<>();
+        trains.add(new Train("T1", "A", "C", 0, 2, Arrays.asList("B")));
+        trains.add(new Train("T2", "A", "C", 0, 3, new ArrayList<>()));
+
+        // Schedule
+        scheduler.schedule(trains);
+    }
+}

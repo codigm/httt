@@ -1,0 +1,162 @@
+/* General styling */
+.leaderboard {
+  font-family: "Poppins", sans-serif;
+  background-color: #18181b;
+  color: #d4d4d8;
+  padding: 2rem;
+  width: 100vw; /* Ensure it takes full viewport width */
+  height: 100vh; /* Ensure it takes full screen height */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  box-sizing: border-box; /* Prevent padding from affecting width */
+  display: flex;
+  flex-direction: column;
+  margin-top: 2pc;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #facc15;
+  text-align: center;
+  margin-top: 0;
+}
+
+/* Flex layout for the leaderboard table */
+.leaderboard-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #1a2332;
+  color: #e0e0e0;
+  padding: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.header-item {
+  flex: 1;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 1rem;
+}
+
+/* Player row layout */
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: #1f2937;
+  border-radius: 8px;
+  width: 100%; /* Make sure it spans the full width */
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.leaderboard-row > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Rank Column */
+.rank {
+  min-width: 60px;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  flex-direction: column;
+  display: flex; /* Arrange the rank and title in a column */
+  align-items: center; /* Center the items */
+}
+
+.rank-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  color: white;
+  background-color: #f5b301;
+}
+
+.rank-1 {
+  background-color: #f5b301;
+}
+.rank-2 {
+  background-color: #c0c0c0;
+}
+.rank-3 {
+  background-color: #cd7f32;
+}
+
+/* Player info */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 2; /* Allow the player name section to take more space */
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #2a3a5c;
+  border: 2px solid #3b4a6b;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  font-weight: 600;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.player-title {
+  font-size: 0.8rem;
+  color: #8ea3c3;
+}
+
+/* Numeric columns */
+.points,
+.kills,
+.deaths {
+  min-width: 70px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Tiers */
+.tiers {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.tier-badge {
+  background-color: #7c5fff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}

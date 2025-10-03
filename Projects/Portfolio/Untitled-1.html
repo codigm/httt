@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Page using CSS</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url("https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80");
+        background-repeat: repeat;
+        background-attachment: fixed;
+        color: white;
+        text-align: center;
+      }
+
+      h1 {
+        background-color: navy;
+        padding: 10px;
+        color: white;
+      }
+
+      .content {
+        font-style: italic;
+        color: yellow;
+        background-image: url("https://picsum.photos/800/200");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 20px;
+      }
+
+      a.register {
+        display: inline-block;
+        margin-top: 15px;
+        color: blue;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      a.register:hover {
+        color: red;
+      }
+
+      a.register:visited {
+        color: purple;
+      }
+
+      .layer-container {
+        position: relative;
+        margin-top: 30px;
+      }
+
+      .layer1,
+      .layer2 {
+        position: absolute;
+        font-weight: bold;
+        font-size: 30px;
+      }
+
+      .layer1 {
+        color: blue;
+        top: 50px;
+        left: 100px;
+        z-index: 1;
+      }
+
+      .layer2 {
+        color: red;
+        top: 70px;
+        left: 100px;
+        z-index: 2;
+      }
+
+      .layer2.second {
+        top: 100px;
+        left: 100px;
+      }
+
+      .footer {
+        margin-top: 50px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Web Page using CSS</h1>
+
+    <div class="content">
+      Welcome to this stylish web page using layered CSS effects!
+    </div>
+
+    <a href="#" class="register">Register</a>
+
+    <div class="layer-container">
+      <div class="layer1">LAYER 1</div>
+      <div class="layer2">LAYER 2</div>
+      <div class="layer2 second">LAYER 2</div>
+    </div>
+
+    <div class="footer">
+      <b>Name:</b> Aryan Chauhan | <b>Student ID:</b> 220111718 | <b>Sem:</b> 6
+    </div>
+  </body>
+</html>

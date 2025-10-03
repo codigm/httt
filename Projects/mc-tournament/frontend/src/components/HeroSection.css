@@ -1,0 +1,85 @@
+.hero-container {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  background: url("/src/assets/hero-bg.jpg") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.active {
+  color: #00ff99;
+}
+
+.timer {
+  margin: 1.2rem 0;
+  font-size: 1.5rem;
+  color: #00ffee;
+}
+
+.join-btn {
+  padding: 0.75rem 2rem;
+  background-color: #00ffcc;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.join-btn:hover {
+  background-color: #00ccaa;
+}
+.practice-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+
+.practice-section h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #00ffcc;
+}
+
+.practice-section p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.practice-btn {
+  padding: 0.75rem 2rem;
+  background-color: #ff6600;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.practice-btn:hover {
+  background-color: #e65c00;
+}

@@ -1,0 +1,98 @@
+/* Remove unwanted scrollbars */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Background wrapper */
+.auth-container {
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Dark overlay */
+.auth-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Login box */
+.auth-box {
+  position: relative;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.auth-remember {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* spacing between checkbox and text */
+  white-space: nowrap; /* keep text in one line */
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.auth-box h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.auth-box p {
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+  background: rgba(40, 40, 40, 0.9);
+  color: white;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #ec4899; /* pink-600 */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.auth-box button:hover {
+  background: #db2777; /* pink-700 */
+}
+
+.auth-box a {
+  color: #3b82f6; /* blue-400 */
+  text-decoration: none;
+}
+
+.auth-box a:hover {
+  text-decoration: underline;
+}
